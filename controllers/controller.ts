@@ -18,7 +18,7 @@ export const getEmailByUsername: RequestHandler = async (request, response, next
             throw createHttpError(404, `User not found`);
         }
 
-        response.status(200).json(userEmail);
+        response.status(200).json(userEmail.email);
     } catch (error) {
         // Calls the exception handler THAT IS DIRECTLY AFTER THIS CODE BLOCK
         next(error);
