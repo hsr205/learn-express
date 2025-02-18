@@ -2,7 +2,7 @@ import express from 'express';
 import * as ReadController from "./controllers/read-controller";
 const router = express.Router();
 
-router.get('/usernames', ReadController.addMsgToRequest)
+router.get('/adduser', ReadController.addMsgToRequest)
 router.get('/usernames/:username', ReadController.getEmailByUsername)
 
 
