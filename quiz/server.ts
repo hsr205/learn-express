@@ -1,7 +1,7 @@
 import {promises as fsPromises} from 'fs';
 import path from 'path';
 import express, {Express, NextFunction, Request, Response} from 'express';
-import router from "../routes/routes";
+import router from "./routes/routes";
 
 import cors from 'cors';
 

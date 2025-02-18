@@ -1,6 +1,6 @@
 import {RequestHandler} from "express";
 import createHttpError from "http-errors";
-import data from '../data/users.json';
+import data from '../../data/users.json';
 
 
 export const getEmailByUsername: RequestHandler = async (request, response, next) => {
