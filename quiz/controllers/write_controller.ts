@@ -1,22 +1,8 @@
-import {NextFunction, Request, RequestHandler, Response} from "express";
+import {RequestHandler} from "express";
 import path from "path";
 import {promises as fsPromises} from 'fs';
+import User from "../interfaces/user-interface";
 
-
-interface User {
-    id: number;
-    firstName: string;
-    lastName: string;
-    username: string;
-    email: string;
-}
-
-/**
- * A type that represents the request received by the server
- */
-interface UserRequest extends Request {
-    users?: User[];
-}
 
 let users: User[];
 
@@ -36,25 +22,13 @@ async function readUsersFile() {
 
 readUsersFile();
 
-export const addMsgToRequest = (req: UserRequest, res: Response, next: NextFunction) => {
-    if (users) {
-        req.users = users;
-        next();
-    } else {
-        return res.json({
-            error: {message: 'users not found', status: 404}
-        });
-    }
+export const addUser: RequestHandler<unknown, unknown, User, unknown> = async (request, response, next) => {
 
-    let usernames = req.users?.map((user) => {
-        return {id: user.id, username: user.username};
-    });
-    res.send(usernames);
-};
 
-export const addUser: RequestHandler<unknown, unknown, unknown, unknown> = async (request, response, next) => {
     try {
+
         let newUser = request.body as User;
+
         users.push(newUser);
 
         await fsPromises.writeFile(
