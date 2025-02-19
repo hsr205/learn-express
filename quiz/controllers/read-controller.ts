@@ -1,23 +1,11 @@
-import {NextFunction, Request, RequestHandler, Response} from "express";
+import {NextFunction, RequestHandler, Response} from "express";
 import {promises as fsPromises} from "fs";
 import path from "path";
 import data from "../../data/users.json";
 import createHttpError from "http-errors";
+import User from "../interfaces/user-interface";
+import UserRequest from "../interfaces/user-request";
 
-interface User {
-    id: number;
-    firstName: string;
-    lastName: string;
-    username: string;
-    email: string;
-}
-
-/**
- * A type that represents the request received by the server
- */
-interface UserRequest extends Request {
-    users?: User[];
-}
 
 let users: User[];
 
@@ -38,6 +26,9 @@ async function readUsersFile() {
 readUsersFile();
 
 export const displayUsers = (req: UserRequest, res: Response, next: NextFunction) => {
+
+    console.log("Inside displayingUsers");
+
     if (users) {
         req.users = users;
         next();
@@ -47,9 +38,20 @@ export const displayUsers = (req: UserRequest, res: Response, next: NextFunction
         });
     }
 
-    let usernames = req.users?.map((user) => {
-        return {id: user.id, username: user.username};
-    });
+    req.users = users.filter(user => user && user.id !== undefined);
+
+
+    let usernames = req.users.map(user => ({
+        id: user.id,
+        username: user.username
+    }));
+
+    console.log(`After usernames`);
+    // let usernames = req.users?.map((user) => {
+    //     return {id: user.id, username: user.username};
+    // });
+
+
     res.send(usernames);
 };
 
@@ -60,8 +62,11 @@ export const getEmailByUsername: RequestHandler = async (request, response, next
 
     try {
         const userEmail = data.find((userObject) => {
-            if (userObject.username === userName) {
-                return userObject.email;
+
+            if (userObject) {
+                if (userObject.username === userName) {
+                    return userObject.email;
+                }
             }
         });
 
