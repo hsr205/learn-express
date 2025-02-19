@@ -46,11 +46,6 @@ export const displayUsers = (req: UserRequest, res: Response, next: NextFunction
         username: user.username
     }));
 
-    console.log(`After usernames`);
-    // let usernames = req.users?.map((user) => {
-    //     return {id: user.id, username: user.username};
-    // });
-
 
     res.send(usernames);
 };
