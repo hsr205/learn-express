@@ -37,7 +37,7 @@ async function readUsersFile() {
 
 readUsersFile();
 
-export const addMsgToRequest = (req: UserRequest, res: Response, next: NextFunction) => {
+export const displayUsers = (req: UserRequest, res: Response, next: NextFunction) => {
     if (users) {
         req.users = users;
         next();
