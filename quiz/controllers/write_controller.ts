@@ -1,7 +1,7 @@
 import {RequestHandler} from "express";
 import path from "path";
 import {promises as fsPromises} from 'fs';
-import User from "../interfaces/user-interface";
+import User from "../types";
 
 
 let users: User[];

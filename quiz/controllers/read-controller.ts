@@ -3,8 +3,8 @@ import {promises as fsPromises} from "fs";
 import path from "path";
 import data from "../../data/users.json";
 import createHttpError from "http-errors";
-import User from "../interfaces/user-interface";
-import UserRequest from "../interfaces/user-request";
+import User from "../types";
+import UserRequest from "../types";
 
 
 let users: User[];
